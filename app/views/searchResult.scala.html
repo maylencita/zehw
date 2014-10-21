@@ -1,0 +1,12 @@
+@(repositories:List[GitRepo])
+
+@inner("Showing results"){
+
+  <h1>Showing search results:</h1>
+
+   <ul>
+   @for(repo <- repositories){
+      <li><a href="@routes.Application.repoDetails(repo.owner.login, repo.name, 100, "linear")">@repo.name</a></li>
+   }
+   </ul>
+}

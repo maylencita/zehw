@@ -1,0 +1,68 @@
+@(repoOwner:String,
+repoName:String,
+maxCommits:Int,
+committers:Seq[(GitUser,Int)],
+commits:Seq[(DateTime,Int)],
+projection:Seq[(DateTime,Double)])
+
+@import AppForms._
+
+@** TODO make this permalink **@
+@inner("Git Repo Details"){
+
+<div class="row">
+  <h1>@repoOwner / @repoName</h1>
+
+  <p>Showing commits from @commits.head._1.toString(DateTimeFormat.forPattern("d MMMM, yyyy")) to @commits.last._1.toString(DateTimeFormat.forPattern("d MMMM, yyyy"))</p>
+</div>
+<div class="row">
+  @defining(commits.unzip){data =>
+    @defining(data._1.map(_.toString(DateTimeFormat.forPattern("MM"))).mkString(",")){dates =>
+      @defining(data._2.mkString(",")){commits =>
+        <img src="//charts.brace.io/bar.svg?Commits=@commits&_labels=@dates&_height=175">
+      }
+    }
+  }
+</div>
+
+  @** charts.brace.io/bar.svg?Likes=3,2,4&_labels=Jan,Feb,Mar **@
+
+<div class="row">
+  <h2>Collaborators:</h2>
+</div>
+
+<div class="row">
+  <div class="col-md-6">
+  <ol>
+    @for((committer, totalCommits) <- committers){
+      <li> <img src="@committer.avatar_url" class="img-rounded avatar"> @committer.login - Commits: @totalCommits
+    }
+  </ol>
+  </div>
+  <div class="col-md-6">
+    @defining((for((committer, total) <- committers) yield committer.login+"="+ total).mkString("&")){commits =>
+        <img src="//charts.brace.io/pie.svg?@commits">
+    }
+  </div>
+</div>
+
+<div class="row">
+  <h2>Projection:</h2>
+
+  <p>From @projection.head._1.toString(DateTimeFormat.forPattern("d MMMM, yyyy")) to @projection.last._1.toString(DateTimeFormat.forPattern("d MMMM, yyyy"))</p>
+  <p>Change method:
+     <a href="@routes.Application.repoDetails(repoOwner,repoName,maxCommits,"linear")" class="active">Linear</a>
+     <a href="@routes.Application.repoDetails(repoOwner,repoName,maxCommits,"exponential")">Exponential Smoothing</a>
+     <a href="@routes.Application.repoDetails(repoOwner,repoName,maxCommits,"arima")">ARIMA</a>
+  </p>
+
+  @defining(projection.unzip){data =>
+    @defining(data._1.map(_.toString(DateTimeFormat.forPattern("MM"))).mkString(",")){dates =>
+      @defining(data._2.mkString(",")){commits =>
+        <img src="//charts.brace.io/line.svg?Commits=@commits&_labels=@dates&_height=175">
+      }
+    }
+  }
+</div>
+
+}

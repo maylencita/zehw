@@ -1,0 +1,41 @@
+@(title: String, styles: Html = Html(""))(content: Html)
+
+@import ghelpers.navHelpers._
+@import AppForms._
+
+@main(title, styles){
+<nav class="navbar navbar-default" role="navigation">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="@routes.Application.index">Giterly!</a>
+    </div>
+
+      @helper.form(action = routes.Application.searchRepository, 'class -> "navbar-form navbar-left", 'role -> "search"){
+        <div class -> "form-group">
+        @helper.inputText(searchForm("searchText"), '_label -> "", 'class -> "form-control", 'placeholder -> "Search...")
+        <button type="submit" class="btn btn-default">Search</button>
+        </div>
+      }
+
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="/">Home</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="https://github.com/login/oauth/authorize">Login to Github</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+<div class="container">
+
+@content
+
+</div><!-- /.container -->
+}

@@ -1,0 +1,86 @@
+@(searchForm:Form[String])
+
+@import helper._
+
+@coverStyle = {
+<link href="@routes.Assets.at("stylesheets/cover.css")" rel="stylesheet">
+}
+
+@main("Giterly", coverStyle) {
+
+<div class="site-wrapper">
+
+  <div class="site-wrapper-inner">
+
+    <div class="cover-container">
+
+      <div class="masthead clearfix">
+        <div class="inner">
+          <ul class="nav masthead-nav">
+            <li class="active"><a href="/">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Login to Github</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="inner cover">
+        <h1 class="cover-heading">Giterly!</h1>
+        <p class="lead">Search a public Github repository</p>
+        <p class="lead">
+          @form(action = routes.Application.searchRepository){
+            @inputText(searchForm("searchText"), '_label -> "", 'class -> "form-control", 'autofocus -> true)
+            <input class="btn btn-lg btn-default" type="submit" value="Seach Github" id="search-btn">
+          }
+        </p>
+        <div class="pannel-heading">
+          <a data-toggle="collapse" href="#cheatsheet">Show syntax cheatsheet</a>
+        </div>
+        <div id="cheatsheet" class="pannel-collapse collapse">
+          <p>Search qualifiers can be added. Example: <code>tetris+language:java+starts:5</code></p>
+          </ul>
+          <table class="table">
+            <tr>
+              <td><code>in</code></td>
+              <td>Qualifies which fields are searched. With this qualifier you can restrict the search to just the repository name, description, readme, or any combination of these.</td>
+            </tr>
+            <tr>
+              <td><code>size</code></td>
+              <td>Finds repositories that match a certain size (in kilobytes).</td>
+            </tr>
+            <tr>
+              <td><code>forks</code></td>
+              <td>Filters repositories based on the number of forks, and/or whether forked repositories should be included in the results at all.</td>
+            </tr>
+            <tr>
+              <td><code>created</code> or <code>pushed</code></td>
+              <td>Filters repositories based on date of creation, or when they were last updated.</td>
+            </tr>
+            <tr>
+              <td><code>user</code> or <code>repo</code></td>
+              <td>Limits searches to a specific user or repository.</td>
+            </tr>
+            <tr>
+              <td><code>language</code></td>
+              <td>Searches repositories based on the language they’re written in.</td>
+            </tr>
+            <tr>
+              <td><code>stars</code></td>
+              <td>Searches repositories based on the number of stars.</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="mastfoot">
+        <div class="inner">
+          <p>A homework, by <a href="https://twitter.com/otramaga">@@otramaga</a>.</p>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+}
