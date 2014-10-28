@@ -74,7 +74,6 @@ object GitHandler{
         WS.url(link).withHeaders(headers:_*).get().map{
           response =>
             val next = response.header("Link").map(_.split(Array('<','>'))(1))
-            println("next: " + next)
 
             response.json.validate[List[Cmt]].fold(
               errs => None -> genInvalidResponseFailure(errs),

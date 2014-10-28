@@ -7,6 +7,8 @@ import org.joda.time.format.DateTimeFormat
 object Stats{
 
   val formatter = DateTimeFormat.forPattern("yyyy-MM-dd")
+  //TODO Add more powerful forcast methods
+  val forcastMethods = Map("linear" -> linearProjection _, "exponential" -> linearProjection _, "arima" -> linearProjection _)
 
   def dateRange(from: DateTime, to: DateTime, step: ReadablePeriod): Iterator[DateTime] =
     Iterator.iterate(from)(_.plus(step)).takeWhile(! _.isAfter(to))

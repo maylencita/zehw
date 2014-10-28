@@ -112,4 +112,13 @@ package object models{
     (__ \ "commit" \ "committer" \ "date").format[String] ~
     (__ \ "commit" \ "message").format[String]
   )(Cmt.apply, unlift(Cmt.unapply))
+
+  implicit val commitWriter:Writes[Commit] = (
+    (__ \ "url").write[String] ~
+    (__ \ "sha").write[String] ~
+    (__ \ "committer").write[GitUser] ~
+    (__ \ "commit" \ "committer" \ "date").write[String] ~
+    (__ \ "commit" \ "message").write[String]
+  )(unlift(Commit.unapply))
+
  }

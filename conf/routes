@@ -11,3 +11,8 @@ GET     /assets/*file                controllers.Assets.at(path="/public", file)
 GET     /repoDetails/:row/:rname     controllers.Application.repoDetails(row,rname,max:Int,method:String)
 
 POST    /searchRepository            controllers.Application.searchRepository
+
+# API calls
+GET     /search                      controllers.Application.apiSearch(q:String)
+GET     /forecast/:row/:rname         controllers.Application.apiForecast(row,rname,max:Int,method:String)
+GET     /committers/:row/:rname       controllers.Application.apiCommitters(row,rname,max:Int)
